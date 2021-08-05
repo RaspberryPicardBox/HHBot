@@ -41,6 +41,7 @@ if __name__ == '__main__':
     token = ""
 
     intents = discord.Intents.default()
+    intents.members = True
 
     bot = commands.Bot(command_prefix="!", description=description, intents=intents)
     client = discord.Client()
@@ -62,8 +63,17 @@ if __name__ == '__main__':
 
     @bot.event
     async def on_ready():
-        print("Bot loaded and ready!")
+        now = str(datetime.now())
+        print("Bot logged in as {0} {1} and ready!".format(bot.user.name, bot.user.id))
         print("-----")
-        print("Current time is {}".format(datetime.now()))
+        print("Current time is {}".format(now[:-7]))
+
+
+    @bot.event
+    async def on_member_join(self, member):
+        guild = member.guild
+        if guild.system_channel is not None:
+            to_send = f'Welcome {member.mention} to {guild.name}!'
+            await guild.system_channel.send(to_send)
 
 bot.run(token)
