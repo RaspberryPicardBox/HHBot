@@ -58,3 +58,12 @@ if __name__ == '__main__':
             f.truncate(0)
             f.write(json.dumps(contents))
         f.close()
+
+
+    @bot.event
+    async def on_ready():
+        print("Bot loaded and ready!")
+        print("-----")
+        print("Current time is {}".format(datetime.now()))
+
+bot.run(token)
